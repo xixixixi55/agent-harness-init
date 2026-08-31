@@ -44,3 +44,19 @@ manual_acceptance: N/A (CLI、Markdown 与确定性安装文件，无 UI、真�
 - `npm pack --dry-run`: PASS, 34 packaged files; package audit reports 0 vulnerabilities.
 - Cross-platform lockfile: official npm registry, 26 esbuild platform entries, no local mirror URLs.
 - GitHub: private repository created at `https://github.com/xixixixi55/agent-harness-init`; verified `main` pushed and configured to track `origin/main`.
+
+## 7. Public distribution follow-up
+
+- [x] T013 Change the GitHub repository visibility to public and verify anonymous metadata access.
+- [x] T014 Add npm registry metadata, public `publishConfig`, release checks, CI, and release automation; verify package metadata and workflow syntax.
+- [x] T015 Update README for direct `npx agent-harness-init` installation and maintainer publishing; preserve independent identity and third-party notices.
+- [ ] T016 Run the frozen release gates, publish `agent-harness-init@0.1.0` publicly, verify registry metadata and a clean external `npx` smoke test, then push release evidence.
+
+### Public distribution evidence
+
+- GitHub API update returned `visibility=public`; an unauthenticated repository-page request returned HTTP 200 with `logged_in=no`.
+- `npm view agent-harness-init` returned 404 before publication, confirming the unscoped package name was available.
+- `npm pkg get` confirms official repository/homepage/issues metadata and `publishConfig.access=public` with `https://registry.npmjs.org/`.
+- Node 20/22 CI and release-triggered npm publishing workflows parse as valid YAML; publishing requires the repository-owned `NPM_TOKEN` secret.
+- `npm run release:check`: PASS, including 3 test files / 10 tests and a 34-file public tarball preview.
+- `npm publish --dry-run --access public`: PASS; target is npm `latest` with public access. Actual publication remains pending npm authentication.

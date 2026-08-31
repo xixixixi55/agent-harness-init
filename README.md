@@ -7,7 +7,7 @@ Agent Harness Init 是一个独立、Provider-neutral 的 Harness 安装器。�
 Agent 的判断力用于识别项目，把文件生成、冲突检测、哈希所有权和写入交给
 确定性的 CLI，避免不同 Agent 手工复制模板造成漂移。
 
-> 当前版本：`0.1.0`，首个可用开发版本。尚未发布到 npm registry。
+> 当前版本：`0.1.0`。GitHub 仓库与 npm 包均公开发布。
 
 ## 它解决什么问题
 
@@ -43,26 +43,29 @@ Bootstrap Skill
                                        doctor
 ```
 
-## 从源码安装
+## 快速安装
 
 要求 Node.js 20 或更高版本。
 
 ```bash
-git clone https://github.com/xixixixi55/agent-harness-init.git
-cd agent-harness-init
-npm install
-npm run verify
-npm link
+# 在目标项目中预览适配计划（不写入）
+npx agent-harness-init plan --root .
+
+# 应用无冲突的安装计划
+npx agent-harness-init init --root . --yes
+
+# 检查生成文件是否完整、未漂移
+npx agent-harness-init doctor --root .
 ```
 
 安装一次 Bootstrap Skill：
 
 ```bash
 # Codex
-agent-harness install-skill --provider codex
+npx agent-harness-init install-skill --provider codex
 
 # Claude Code
-agent-harness install-skill --provider claude
+npx agent-harness-init install-skill --provider claude
 ```
 
 安装 Skill 是用户级写入，与在具体项目中安装 Harness 是两个独立授权范围。
@@ -76,9 +79,9 @@ agent-harness install-skill --provider claude
 Bootstrap Skill 会引导 Agent 执行：
 
 ```bash
-agent-harness plan --root .
-agent-harness init --root . --yes
-agent-harness doctor --root .
+npx agent-harness-init plan --root .
+npx agent-harness-init init --root . --yes
+npx agent-harness-init doctor --root .
 ```
 
 如果项目已经有 `AGENTS.md`，CLI 不会接管或覆盖它。Agent 会先阅读原规则，
@@ -148,12 +151,30 @@ Provider、工作流以及验证命令。框架源码不硬编码用户项目的
 ## 开发
 
 ```bash
+git clone https://github.com/xixixixi55/agent-harness-init.git
+cd agent-harness-init
 npm install
 npm run typecheck
 npm test
 npm run build
 npm run verify
+npm run release:check
 ```
+
+## npm 发布维护
+
+仓库的 `publishConfig` 固定使用官方 npm registry 并公开发布。维护者发布前应：
+
+```bash
+npm version <patch|minor|major>
+npm run release:check
+npm publish --access public
+git push --follow-tags
+```
+
+`.github/workflows/ci.yml` 会在提交和 Pull Request 上验证 Node.js 20/22。
+`.github/workflows/npm-publish.yml` 可在 GitHub Release 发布时使用仓库的
+`NPM_TOKEN` secret 自动发布；首次配置 token 前不会执行外部发布。
 
 正式行为位于 `openspec/`。核心依赖方向为：
 
