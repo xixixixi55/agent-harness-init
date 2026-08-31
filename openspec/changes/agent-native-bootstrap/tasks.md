@@ -31,7 +31,7 @@ manual_acceptance: N/A (CLI、Markdown 与确定性安装文件，无 UI、真�
 
 - [x] T010 Run typecheck, tests, build, packaged-CLI smoke tests, Skill validation, and clean-target/conflict-target end-to-end trials.
 - [x] T011 Perform manual review of generated project instructions and dry-run output, then freeze the release candidate.
-- [ ] T012 Initialize Git, create the remote repository, push the verified initial version, and record the resulting URL.
+- [x] T012 Initialize Git, create the remote repository, push the verified initial version, and record the resulting URL.
 
 ## Verification evidence
 
@@ -43,3 +43,4 @@ manual_acceptance: N/A (CLI、Markdown 与确定性安装文件，无 UI、真�
 - CLI E2E: plan, init, doctor, configured typecheck/test, and temporary Codex Skill installation PASS.
 - `npm pack --dry-run`: PASS, 34 packaged files; package audit reports 0 vulnerabilities.
 - Cross-platform lockfile: official npm registry, 26 esbuild platform entries, no local mirror URLs.
+- GitHub: private repository created at `https://github.com/xixixixi55/agent-harness-init`; verified `main` pushed and configured to track `origin/main`.

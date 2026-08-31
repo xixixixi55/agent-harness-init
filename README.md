@@ -48,7 +48,7 @@ Bootstrap Skill
 要求 Node.js 20 或更高版本。
 
 ```bash
-git clone <本仓库地址>
+git clone https://github.com/xixixixi55/agent-harness-init.git
 cd agent-harness-init
 npm install
 npm run verify
