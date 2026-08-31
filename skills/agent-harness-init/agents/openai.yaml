@@ -1,0 +1,6 @@
+interface:
+  display_name: "Agent Harness Init"
+  short_description: "Safely install and adapt Harness gates to a project"
+  default_prompt: "Use $agent-harness-init to install and adapt the Harness to this project."
+policy:
+  allow_implicit_invocation: true

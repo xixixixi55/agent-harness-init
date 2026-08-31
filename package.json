@@ -1,0 +1,43 @@
+{
+  "name": "agent-harness-init",
+  "version": "0.1.0",
+  "description": "Agent-native, provider-neutral Harness installer for adapting governance and verification gates to existing projects.",
+  "type": "module",
+  "bin": {
+    "agent-harness": "dist/cli.js"
+  },
+  "files": [
+    "dist/",
+    "skills/",
+    "README.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md",
+    "licenses/"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "verify": "npm run typecheck && npm test && npm run build",
+    "prepack": "npm run verify"
+  },
+  "keywords": [
+    "ai-agent",
+    "harness-engineering",
+    "governance",
+    "project-scaffold",
+    "openspec"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "yaml": "^2.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}

@@ -1,0 +1,13 @@
+schema: spec-driven
+context: |
+  Agent Harness Init is a provider-neutral TypeScript CLI and Bootstrap Skill.
+  It safely adapts governance rules and verification gates to existing projects.
+rules:
+  proposal:
+    - Include explicit non-goals and rollout impact.
+  specs:
+    - Every requirement must contain at least one observable scenario.
+  design:
+    - Describe ownership, overwrite protection, rollback, and provider boundaries.
+  tasks:
+    - Order work by dependency direction and name verification evidence.
