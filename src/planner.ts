@@ -7,20 +7,23 @@ import { loadManifest } from './manifest.js'
 import { renderArtifacts } from './render.js'
 import type { AgentProvider, InstallPlan, PlannedArtifact } from './types.js'
 
-function classify(root: string, pathValue: string, content: string, managedHash?: string): PlannedArtifact {
+function classify(root: string, pathValue: string, content: string, managed: boolean | undefined, managedHash?: string): PlannedArtifact {
   const target = path.join(root, ...pathValue.split('/'))
   const nextHash = sha256(content)
   if (!existsSync(target)) {
-    return { path: pathValue, content, action: 'create', reason: 'destination is absent', nextHash }
+    return { path: pathValue, content, managed, action: 'create', reason: 'destination is absent', nextHash }
   }
   const currentHash = sha256(readFileSync(target))
   if (currentHash === nextHash) {
-    return { path: pathValue, content, action: 'unchanged', reason: 'content already matches', nextHash, previousHash: currentHash }
+    if (managed === false || managedHash) {
+      return { path: pathValue, content, managed, action: 'unchanged', reason: managed === false ? 'project-owned content already matches' : 'owned content already matches', nextHash, previousHash: currentHash }
+    }
+    return { path: pathValue, content, managed, action: 'conflict', reason: 'identical destination exists but is not owned by this installation', nextHash, previousHash: currentHash }
   }
   if (managedHash && currentHash === managedHash) {
-    return { path: pathValue, content, action: 'update', reason: 'unchanged managed file can be updated', nextHash, previousHash: currentHash }
+    return { path: pathValue, content, managed, action: 'update', reason: 'unchanged managed file can be updated', nextHash, previousHash: currentHash }
   }
-  return { path: pathValue, content, action: 'conflict', reason: 'destination is unowned or was modified', nextHash, previousHash: currentHash }
+  return { path: pathValue, content, managed, action: 'conflict', reason: 'destination is unowned or was modified', nextHash, previousHash: currentHash }
 }
 
 export function createInstallPlan(
@@ -30,10 +33,14 @@ export function createInstallPlan(
 ): InstallPlan {
   const facts = discoverProject(root)
   const manifest = loadManifest(facts.root)
-  const config = manifest ? loadConfig(facts.root) : configFromFacts(facts, agents)
-  const rendered = renderArtifacts(facts, config).filter((artifact) => !manifest || artifact.path !== 'harness.config.yaml')
+  const configExists = existsSync(path.join(facts.root, 'harness.config.yaml'))
+  const config = manifest || configExists ? loadConfig(facts.root) : configFromFacts(facts, agents)
+  const rendered = renderArtifacts(facts, config, Object.keys(manifest?.files ?? {})).filter((artifact) => {
+    if (artifact.managed !== false) return true
+    return !existsSync(path.join(facts.root, ...artifact.path.split('/')))
+  })
   const artifacts = rendered.map((artifact) =>
-    classify(facts.root, artifact.path, artifact.content, manifest?.files[artifact.path]?.hash),
+    classify(facts.root, artifact.path, artifact.content, artifact.managed, manifest?.files[artifact.path]?.hash),
   )
   return {
     root: facts.root,

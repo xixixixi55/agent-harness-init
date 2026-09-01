@@ -42,7 +42,7 @@ export function applyInstallPlan(plan: InstallPlan, now = new Date()): HarnessMa
       installedAt: now.toISOString(),
       files: Object.fromEntries(
         plan.artifacts
-          .filter((artifact) => artifact.path !== 'harness.config.yaml')
+          .filter((artifact) => artifact.managed !== false)
           .map((artifact) => [artifact.path, { hash: artifact.nextHash }]),
       ),
     }

@@ -39,6 +39,24 @@ Agent 很擅长理解代码，但仅靠一段聊天提示并不能形成稳定�
 3. **Provider 入口**：为 Codex 和 Claude Code 生成项目级 Skill，让不同 Agent 读取同一套规则。
 4. **安全生命周期**：`.harness/manifest.json` 记录托管文件与哈希，为更新、漂移检查和卸载提供所有权依据。
 
+更完整地说，安装的是一套通用治理架构，而不只是几份提示词：
+
+```text
+项目自有根规则
+  └─ Harness 规则与事实源
+      ├─ 项目安全、架构与资产策略（项目自有、可配置）
+      ├─ Level 1 / 2 / 3 风险路由
+      ├─ OpenSpec-compatible 需求与变更工件
+      ├─ 渐进式上下文与任务驱动开发
+      ├─ 工程验证 + Spec 语义审查 + 独立代码审查
+      ├─ 候选冻结、反馈解冻与最终门控
+      └─ Spec 同步、熵治理、归档与迭代经验反哺
+```
+
+其中 OpenSpec 负责“要做什么”的正式工件，Harness 负责“如何做对”的执行约束与门控。
+OpenSpec CLI 可以辅助创建和归档，但不是运行依赖；即使 CLI 不存在，Level 2/3 仍必须
+遵守相同的 `openspec/changes/` 文件协议，不能降级为只有聊天记录的开发。
+
 默认生成结构：
 
 ```text
@@ -49,9 +67,17 @@ target-project/
 ├── harness.config.yaml               # 项目适配与验证命令
 ├── harness/
 │   ├── architecture.md               # 检测到的源码/测试边界
-│   └── verification.md               # 风险相称的验证策略
-├── .agents/skills/agent-harness/     # Codex 项目 Skill
-├── .claude/skills/agent-harness/     # Claude Code 项目 Skill
+│   ├── verification.md               # 风险相称的验证策略
+│   ├── iteration-guide.md             # Level 1/2/3 与 OpenSpec 生命周期
+│   ├── workflow-protocols.md           # 九个生命周期 Skill 的统一可执行协议
+│   ├── code-review-agent.md           # 独立评估者协议
+│   ├── entropy-rules.md               # 文档、同步与归档熵治理
+│   ├── templates/                      # 严格 review 与 iteration 记录模板
+│   ├── project-architecture.md        # 项目自有架构政策
+│   └── repository-assets.md           # 项目自有资产与敏感数据政策
+├── openspec/config.yaml              # OpenSpec-compatible 工件规则
+├── .agents/skills/harness-*/         # Codex 全生命周期 Skills
+├── .claude/skills/harness-*/         # Claude Code 对等 Skills
 └── .harness/
     ├── manifest.json                 # 托管文件 SHA-256 与框架版本
     └── backups/                      # 更新托管文件时按需创建
@@ -84,7 +110,7 @@ agents:
   - codex
   - claude
 workflow:
-  provider: native
+  provider: openspec
 architecture:
   sourceRoots:
     - src
@@ -176,7 +202,9 @@ Skill 会引导 Agent 执行 `plan → 审阅 → init --yes → doctor`。安�
 | `init --yes` | 应用首次安装的无冲突计划并建立 manifest | 是 |
 | `update --yes` | 更新哈希仍与旧 manifest 一致的托管文件 | 是 |
 | `doctor` | 报告托管文件为 `OK`、`MISSING` 或 `MODIFIED` | 否 |
-| `verify` | 按配置依次执行 lint、typecheck、test、build 中存在的命令，首次失败即停止 | 运行项目命令 |
+| `status` | 展示活跃变更、Level 和任务进度 | 否 |
+| `gate` | 校验 Level/阶段所需工件、任务、review 与 sync 声明 | 否 |
+| `verify` | 按配置中的真实命令顺序执行命名门控，首次失败即停止 | 运行项目命令 |
 | `uninstall --yes` | 删除未被用户修改的托管文件，保留修改过的文件 | 是 |
 | `install-skill` | 安装 Codex 或 Claude 的用户级 Bootstrap Skill | 是，项目外 |
 
@@ -196,7 +224,7 @@ Skill 会引导 Agent 执行 `plan → 审阅 → init --yes → doctor`。安�
 
 源码根目录当前检测 `src`、`app`、`packages`、`lib`；测试目录检测 `tests`、`test`、
 `__tests__`、`e2e`。JavaScript 命令来自 `package.json` 中已有的 `build`、`typecheck`、
-`lint`/`lint:arch` 和 `test` scripts；框架不会为缺失命令虚构替代品。
+`lint` 和 `test` scripts；框架不会为缺失命令虚构替代品。
 
 “可用于任意项目”指未知技术栈可以通过 `custom` Profile 和 `harness.config.yaml` 接入，
 不代表 0.1 版本已经内置所有语言、构建系统或业务架构的自动识别器。
@@ -218,7 +246,7 @@ Skill 会引导 Agent 执行 `plan → 审阅 → init --yes → doctor`。安�
 - 不是替代项目自身 `AGENTS.md`、安全策略或组织流程的通用规则集。
 - 不理解用户的业务含义，也不会凭目录名称推断正式需求。
 - 不保证项目本身的测试正确；它负责确定性地调用项目声明的验证入口。
-- OpenSpec 可作为工作流提供者，但不是安装和运行 Harness 的必需依赖。
+- OpenSpec-compatible 工件是 Level 2/3 的正式协议；OpenSpec CLI 本身不是运行依赖。
 
 ## 开发与发布
 
@@ -239,6 +267,9 @@ types -> discovery -> planning -> rendering -> filesystem -> commands -> cli
 ```
 
 仓库 CI 在 Node.js 20 和 22 上运行验证。维护者发布前执行：
+
+通用安装、三级工作流、严格归档、单/双 Provider、旧版升级与命名门控的可复现
+SYNTHETIC 验收步骤见 [`docs/synthetic-e2e.md`](docs/synthetic-e2e.md)。
 
 ```bash
 npm version <patch|minor|major>

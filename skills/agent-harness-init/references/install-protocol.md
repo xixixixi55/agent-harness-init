@@ -17,6 +17,19 @@ missing or modified. Treat this as project drift, not permission to restore it.
 `harness.config.yaml`, stops at the first failure, and may be expensive. Use it
 when the user asks for gates or when implementation completion requires them.
 
+`agent-harness status --root <root>` reports active change levels and task
+progress. `agent-harness gate --level <1|2|3> --stage <plan|verify|archive>
+--change <name>` checks deterministic workflow structure. Gate success does not
+replace semantic requirement review.
+
+## Project-owned adaptation
+
+`harness.config.yaml`, `harness/project-architecture.md`, and
+`harness/repository-assets.md` are initialized once and remain project-owned.
+Adapt them to the target project's real commands, dependency directions,
+fixtures, generated outputs, and sensitive-data boundaries. Never fill them
+with rules copied from an unrelated source project.
+
 ## Uninstall
 
 Run doctor first. `agent-harness uninstall --root <root> --yes` removes only

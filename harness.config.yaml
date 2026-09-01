@@ -1,0 +1,25 @@
+schemaVersion: 1
+project:
+  name: agent-harness-init
+  profile: javascript
+agents:
+  - codex
+  - claude
+workflow:
+  provider: openspec
+architecture:
+  sourceRoots:
+    - src
+  testRoots: []
+commands:
+  build: npm run build
+  typecheck: npm run typecheck
+  test: npm run test
+verification:
+  gates:
+    - name: typecheck
+      command: npm run typecheck
+    - name: test
+      command: npm run test
+    - name: build
+      command: npm run build

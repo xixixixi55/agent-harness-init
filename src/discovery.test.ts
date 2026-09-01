@@ -44,4 +44,20 @@ describe('discoverProject', () => {
     expect(facts.profile).toBe('custom')
     expect(facts.commands).toEqual({ build: undefined, typecheck: undefined, lint: undefined, test: undefined })
   })
+
+  it('does not guess pytest or adopt project-specific script aliases', () => {
+    const root = fixture()
+    writeFileSync(path.join(root, 'pyproject.toml'), '[project]\nname = "SYNTHETIC"\n')
+    writeFileSync(path.join(root, 'package.json'), JSON.stringify({
+      name: 'SYNTHETIC-mixed',
+      scripts: { 'lint:arch': 'project-specific-check' },
+    }))
+
+    expect(discoverProject(root).commands).toEqual({
+      build: undefined,
+      typecheck: undefined,
+      lint: undefined,
+      test: undefined,
+    })
+  })
 })

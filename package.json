@@ -1,6 +1,6 @@
 {
   "name": "agent-harness-init",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Agent-native, provider-neutral Harness installer for adapting governance and verification gates to existing projects.",
   "author": "xixixixi55",
   "type": "module",
@@ -9,6 +9,7 @@
   },
   "files": [
     "dist/",
+    "docs/",
     "skills/",
     "README.md",
     "LICENSE",

@@ -28,9 +28,16 @@ and merge a minimal reference into an existing project-owned instruction file.
    concise reference to `AGENT_HARNESS.md` if no equivalent reference exists.
    Do not weaken or replace existing rules.
 7. Run `agent-harness doctor --root <root>` and report the detected profile,
-   generated files, preserved files, and diagnostic result. Do not run the
-   project's full verification suite unless requested or needed for a separate
-   implementation task.
+   generated files, preserved files, and diagnostic result.
+8. Read the generated rule precedence, Level 1/2/3 routing, OpenSpec artifact,
+   progressive-context, verification, semantic-review, independent-review,
+   architecture, asset, entropy, and archive policies. Report project-owned
+   architecture/asset TODOs instead of copying assumptions from another project.
+9. Confirm that configured providers received equivalent propose, apply, fix,
+   continue, status, verify, review, code-review, and archive semantics.
+
+Do not run the project's full verification suite merely because the Harness was
+installed. Full gates belong to a risk-justified implementation lifecycle.
 
 For updates, uninstall, provider paths, conflict behavior, and authorization
 boundaries, read [references/install-protocol.md](references/install-protocol.md).

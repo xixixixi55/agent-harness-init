@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "framework": {
+    "name": "agent-harness-init",
+    "version": "0.2.0"
+  },
+  "installedAt": "2026-09-01T01:28:09.171Z",
+  "files": {
+    ".agents/skills/agent-harness/SKILL.md": {
+      "hash": "690debdbe872da705d196f1dc6dd2c02b56df52eab70e60cdc7d91ee9c7bec22"
+    },
+    ".agents/skills/harness-apply/SKILL.md": {
+      "hash": "9e3f3219033b7702f8b4d4719406782b8d9debb365ca81c3f13ae4c29519e66c"
+    },
+    ".agents/skills/harness-archive/SKILL.md": {
+      "hash": "fb1c7b1a7eec98b6322d821527acbc74ca426040071fd6e4742ea8dac576ea58"
+    },
+    ".agents/skills/harness-code-review/SKILL.md": {
+      "hash": "9eb8e71a6ece8dc367e72b67d3c3d621bda585f46f751190886cebbe70d59827"
+    },
+    ".agents/skills/harness-continue/SKILL.md": {
+      "hash": "b215ca15aadb7ffa7218d0d020270518c46d8abdad328a68db98dc7bf4128af1"
+    },
+    ".agents/skills/harness-fix/SKILL.md": {
+      "hash": "d392ac92349b53c06f31ef477102f34016d07fe1b15bc312601e15e37a301c62"
+    },
+    ".agents/skills/harness-propose/SKILL.md": {
+      "hash": "8bc51602cab42ab4158970143253b003f260ab15e6715eeb35a74504b9828088"
+    },
+    ".agents/skills/harness-semantic-review/SKILL.md": {
+      "hash": "95649b9976e4e01770752807f9dfa300a92649ed33c6313767b1329ba7818835"
+    },
+    ".agents/skills/harness-status/SKILL.md": {
+      "hash": "b4c8c4c30998fed2345b65df64063efdabcac8a05c145ba292aa0c99694c999b"
+    },
+    ".agents/skills/harness-verify/SKILL.md": {
+      "hash": "0a274fb7fdd2d06db893dbdc5b7f136084ccaa570c4a6c2f03f21a2611dd50b2"
+    },
+    ".claude/skills/agent-harness/SKILL.md": {
+      "hash": "690debdbe872da705d196f1dc6dd2c02b56df52eab70e60cdc7d91ee9c7bec22"
+    },
+    ".claude/skills/harness-apply/SKILL.md": {
+      "hash": "9e3f3219033b7702f8b4d4719406782b8d9debb365ca81c3f13ae4c29519e66c"
+    },
+    ".claude/skills/harness-archive/SKILL.md": {
+      "hash": "fb1c7b1a7eec98b6322d821527acbc74ca426040071fd6e4742ea8dac576ea58"
+    },
+    ".claude/skills/harness-code-review/SKILL.md": {
+      "hash": "9eb8e71a6ece8dc367e72b67d3c3d621bda585f46f751190886cebbe70d59827"
+    },
+    ".claude/skills/harness-continue/SKILL.md": {
+      "hash": "b215ca15aadb7ffa7218d0d020270518c46d8abdad328a68db98dc7bf4128af1"
+    },
+    ".claude/skills/harness-fix/SKILL.md": {
+      "hash": "d392ac92349b53c06f31ef477102f34016d07fe1b15bc312601e15e37a301c62"
+    },
+    ".claude/skills/harness-propose/SKILL.md": {
+      "hash": "8bc51602cab42ab4158970143253b003f260ab15e6715eeb35a74504b9828088"
+    },
+    ".claude/skills/harness-semantic-review/SKILL.md": {
+      "hash": "95649b9976e4e01770752807f9dfa300a92649ed33c6313767b1329ba7818835"
+    },
+    ".claude/skills/harness-status/SKILL.md": {
+      "hash": "b4c8c4c30998fed2345b65df64063efdabcac8a05c145ba292aa0c99694c999b"
+    },
+    ".claude/skills/harness-verify/SKILL.md": {
+      "hash": "0a274fb7fdd2d06db893dbdc5b7f136084ccaa570c4a6c2f03f21a2611dd50b2"
+    },
+    "AGENT_HARNESS.md": {
+      "hash": "53a74528913e00f7698e2332a368709f8fb53a5214eba4b801688d70b0801d3b"
+    },
+    "harness/architecture.md": {
+      "hash": "e73d7f0d99d0e5246b153c98fe6088b964b44b2e4b1791fd8fe768f3c3eab715"
+    },
+    "harness/code-review-agent.md": {
+      "hash": "9d6e97d87ee7a2eef1b3b8932674d53d258a719c3496f7a69cc80458fb1dce49"
+    },
+    "harness/entropy-rules.md": {
+      "hash": "f74de7333aab6a2d01b738b9a7b533b33cd472a48d9cfa79d45c2c987322fa19"
+    },
+    "harness/iteration-guide.md": {
+      "hash": "8571b2b3666dbdfbd605900f4076f4c2e33442a949ae1b320439a800cc0a1acc"
+    },
+    "harness/templates/iteration.md": {
+      "hash": "71580532ae5f4d818dd5dd31c8ef67e2145b963cc121536bff8f6c47a07dea63"
+    },
+    "harness/templates/review.md": {
+      "hash": "199d337339503fb688c9bcae26f410979d6793b0b7a78637c1cae6f5c87b662c"
+    },
+    "harness/verification.md": {
+      "hash": "17703338235d429b966765750249c92635337477561f80a9714bfb5e0e90f3a3"
+    },
+    "harness/workflow-protocols.md": {
+      "hash": "64c1d495f244e2f09333153a93db70840664a7dcf94ea968265ce50dbcdd5684"
+    },
+    "INSTALL_AGENT.md": {
+      "hash": "c55330b58dad43ec4a9f05fb05d313c32a2c498ecaaeabc042cf8a9ecff1b352"
+    }
+  }
+}

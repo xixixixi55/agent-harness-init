@@ -28,13 +28,13 @@ function npmCommand(script: string, scripts?: Record<string, string>): string | 
   return scripts?.[script] ? `npm run ${script}` : undefined
 }
 
-function detectCommands(packageJson: PackageJson | undefined, python: boolean): ProjectCommands {
+function detectCommands(packageJson: PackageJson | undefined): ProjectCommands {
   const scripts = packageJson?.scripts
   return {
     build: npmCommand('build', scripts),
     typecheck: npmCommand('typecheck', scripts),
-    lint: npmCommand('lint', scripts) ?? npmCommand('lint:arch', scripts),
-    test: npmCommand('test', scripts) ?? (python ? 'python -m pytest -q --tb=short' : undefined),
+    lint: npmCommand('lint', scripts),
+    test: npmCommand('test', scripts),
   }
 }
 
@@ -72,7 +72,7 @@ export function discoverProject(rootInput: string): ProjectFacts {
     markers,
     sourceRoots: ['src', 'app', 'packages', 'lib'].filter((candidate) => exists(root, candidate)),
     testRoots: ['tests', 'test', '__tests__', 'e2e'].filter((candidate) => exists(root, candidate)),
-    commands: detectCommands(packageJson, python),
+    commands: detectCommands(packageJson),
     packageManager: packageJson?.packageManager?.split('@')[0],
     gitDirty: detectGitDirty(root),
     existingAgentFiles: ['AGENTS.md', 'CLAUDE.md', '.agents', '.claude'].filter((candidate) => exists(root, candidate)),

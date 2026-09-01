@@ -1,5 +1,7 @@
 export type ProjectProfile = 'javascript' | 'python' | 'fullstack' | 'monorepo' | 'custom'
 export type AgentProvider = 'codex' | 'claude'
+export type WorkflowLevel = 1 | 2 | 3
+export type GateStage = 'plan' | 'verify' | 'archive'
 
 export interface ProjectCommands {
   build?: string
@@ -7,6 +9,8 @@ export interface ProjectCommands {
   lint?: string
   test?: string
 }
+
+export interface NamedGate { name: string; command: string }
 
 export interface ProjectFacts {
   root: string
@@ -28,9 +32,10 @@ export interface HarnessConfig {
   workflow: { provider: 'native' | 'openspec' }
   architecture: { sourceRoots: string[]; testRoots: string[] }
   commands: ProjectCommands
+  verification?: { gates: NamedGate[] }
 }
 
-export interface RenderedArtifact { path: string; content: string }
+export interface RenderedArtifact { path: string; content: string; managed?: boolean }
 export type PlanAction = 'create' | 'update' | 'unchanged' | 'conflict'
 
 export interface PlannedArtifact extends RenderedArtifact {
@@ -60,4 +65,17 @@ export interface HarnessManifest {
 export interface DoctorFinding {
   path: string
   status: 'ok' | 'missing' | 'modified'
+}
+
+export interface WorkflowFinding {
+  code: string
+  status: 'ok' | 'error'
+  message: string
+}
+
+export interface ChangeStatus {
+  name: string
+  level?: WorkflowLevel
+  completedTasks: number
+  totalTasks: number
 }
