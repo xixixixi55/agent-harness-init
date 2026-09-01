@@ -14,7 +14,7 @@ Agent Harness Init 是一个独立、开源、Provider-neutral 的项目级 Harn
 用户不需要理解 Harness 的内部结构。安装 Bootstrap Skill 后，在目标仓库中直接告诉
 Agent“帮我安装并适配 Harness”，Agent 就能调用确定性的 CLI 完成分析、预览、安装和检查。
 
-> 当前公开版本：[`agent-harness-init@0.1.0`](https://www.npmjs.com/package/agent-harness-init)，要求 Node.js 20 或更高版本。
+> 当前公开版本：[`agent-harness-init@0.2.0`](https://www.npmjs.com/package/agent-harness-init)，要求 Node.js 20 或更高版本。
 
 ## 为什么需要它
 
@@ -212,7 +212,7 @@ Skill 会引导 Agent 执行 `plan → 审阅 → init --yes → doctor`。安�
 
 ## 项目识别与适配范围
 
-0.1 版本提供五种 Profile：
+当前版本提供五种 Profile：
 
 | Profile | 识别依据 |
 |---|---|
@@ -227,7 +227,7 @@ Skill 会引导 Agent 执行 `plan → 审阅 → init --yes → doctor`。安�
 `lint` 和 `test` scripts；框架不会为缺失命令虚构替代品。
 
 “可用于任意项目”指未知技术栈可以通过 `custom` Profile 和 `harness.config.yaml` 接入，
-不代表 0.1 版本已经内置所有语言、构建系统或业务架构的自动识别器。
+不代表当前版本已经内置所有语言、构建系统或业务架构的自动识别器。
 
 ## 安全与所有权模型
 

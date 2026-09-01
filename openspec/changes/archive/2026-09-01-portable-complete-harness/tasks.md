@@ -37,7 +37,7 @@ manual_acceptance: PASS — reviewed generated project instructions and SYNTHETI
 ## 7. Freeze and release
 
 - [x] T014 Freeze the candidate, run independent code review plus semantic spec review, fix findings, and invalidate/repeat affected evidence when formal behavior changes.
-- [ ] T015 Run the scoped full release gate, validate and sync OpenSpec specs, archive the change, and prepare a minor npm release; publishing and remote release remain separately authorized external actions.
+- [x] T015 Run the scoped full release gate, validate and sync OpenSpec specs, archive the change, and prepare a minor npm release; publishing and remote release remain separately authorized external actions.
 
 ## Verification evidence
 
@@ -49,3 +49,4 @@ manual_acceptance: PASS — reviewed generated project instructions and SYNTHETI
 - `openspec validate --specs --strict --no-interactive`: PASS; 7 living specs synced and valid.
 - `npm run release:check`: PASS for `agent-harness-init@0.2.0`; 37-file dry-run tarball, no publication.
 - Self-hosted install: PASS; conflict-free plan, install, doctor, and Level 3 verify gate.
+- Human confirmation: PASS; user explicitly confirmed formal archive and npm 0.2.0 publication.
